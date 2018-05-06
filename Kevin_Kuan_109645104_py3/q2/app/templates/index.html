@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome to a terrible Calculator</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <p>
+            {{ form.operand1.label }} <br>
+            {{  form.operand1(size=40)}} <br>
+            {% for error in form.operand1.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+        <p>
+            {{ form.operand2.label }} <br>
+            {{  form.operand2(size=40)}} <br>
+            {% for error in form.operand2.errors %}
+             <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

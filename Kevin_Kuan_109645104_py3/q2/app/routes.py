@@ -15,10 +15,19 @@ def index():
 	global result
 	form = SubmissionForm()
 	if form.validate_on_submit():
-		# print("hello")	
+		try:
+			test_op1=float(form.operand1.data)
+		except ValueError:
+			return redirect(url_for('input_error'))
+		try:
+			test_op2=float(form.operand2.data)
+		except ValueError:
+			return redirect(url_for('input_error'))
+			
 		op1=float(form.operand1.data)
 		op2=float(form.operand2.data)
 		operator=(form.operator.data)
+
 
 		if operator=="add":
 			result= op1+op2
@@ -33,10 +42,10 @@ def index():
 			return redirect(url_for('multiply'))
 
 		else:
+			if op2 == float(0):
+				return redirect(url_for('divide_by_zero'))
 			result= op1/op2		
 			return redirect(url_for('divide'))
-
-
 
 	return render_template("index.html",title="Form", form=form)
 
@@ -64,6 +73,9 @@ def divide():
 def input_error():
     return render_template('error.html')
 
+@app.route("/result/divide_by_zero")
+def divide_by_zero():
+	return render_template("divide_by_zero.html")
 @app.errorhandler(404)
 def not_found_error(error):
 	return render_template('404.html'), 404
